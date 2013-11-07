@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="StationSearch">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS Sample</title>
+
+    <script type="application/javascript" src="js/lib/angular.js"></script>
+    <script type="application/javascript" src="js/lib/bootstrap-gh-pages/ui-bootstrap-tpls-0.6.0.js"></script>
+    <script type="application/javascript" src="js/lib/bootstrap-gh-pages/assets/plunker.js"></script>
+    <script type="application/javascript" src="js/lib/bootstrap-gh-pages/assets/app.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script type="text/javascript" src="js/pagination.js"></script>
+
+</head>
+
+<body>
+
+<div class="container" ng-controller="PaginationController">
+
+    Search : <input type="text" ng-model="search_query">
+
+    <p>{{text}}</p>
+
+    <hr/>
+
+    <!-- PaginationControl UI -->
+    <script type="text/ng-template" id="paginationControl.html">
+        <div class="pagination text-center" ng-show="paginator.pageCount() > 1">
+            <ul>
+                <li ng-click="paginator.firstPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+                    <a>
+                        <i class="icon-fast-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
+                    </a>
+                </li>
+                <li ng-click="paginator.perviousPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+                    <a>
+                        <i class="icon-step-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
+                    </a>
+                </li>
+                <li ng-click="paginator.setPage(i)" ng-repeat="i in [] | forLoop:0:paginator.pageCount()"
+                    ng-class="paginator.page==i && 'active'">
+                    <a>{{i+1}}</a>
+                </li>
+                <li ng-click="paginator.nextPage()" ng-class="paginator.isLastPage() && 'disabled'">
+                    <a>
+                        <i class="icon-step-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
+                    </a>
+                </li>
+                <li ng-click="paginator.lastPage()" ng-class="paginator.isLastPage() && 'disabled'">
+                    <a>
+                        <i class="icon-fast-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </script>
+
+    <table class="table-bordered table-condensed">
+        <thead>
+        <th>ID</th>
+        <th>所属</th>
+        <th>駅名</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="station in stations | paginate : rowsPerPage | filter : search_query">
+            <td>{{station.id}}</td>
+            <td>{{station.line}}</td>
+            <td>{{station.name}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="control-group">
+        <label class="control-label" for="rows-per-page">Rows per page</label>
+
+        <div class="controls">
+            <select id="rows-per-page" ng-model="rowsPerPage" class="input-xlarge">
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+        </div>
+    </div>
+
+    <paginator></paginator>
+
+</div>
+</body>
+</html>
