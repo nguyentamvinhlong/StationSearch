@@ -4,25 +4,65 @@
     <meta charset="UTF-8">
     <title>AngularJS Sample</title>
 
+
+    <script type="application/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
     <script type="application/javascript" src="js/lib/angular.js"></script>
     <script type="application/javascript" src="js/lib/bootstrap-gh-pages/ui-bootstrap-tpls-0.6.0.js"></script>
     <script type="application/javascript" src="js/lib/bootstrap-gh-pages/assets/plunker.js"></script>
     <script type="application/javascript" src="js/lib/bootstrap-gh-pages/assets/app.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
+    <script type="text/javascript" src="http://express.heartrails.com/api/express.js"></script>
+
+
     <script type="text/javascript" src="js/pagination.js"></script>
+    <script type="text/javascript" src="js/getData.js"></script>
 
 </head>
 
 <body>
 
 <div class="container" ng-controller="PaginationController">
+    <header>
 
-    Search : <input type="text" ng-model="search_query">
+        <h1>検索</h1>
+        <!-- 「エリア名」 「路線名」 「駅名」 の連結コンボボックス -->
+        <div class="conbos1">
+            <select id="area" name="area" onchange="HREOnChangeArea();">
+                <option value="エリア">エリア</option>
+            </select>
+            <select id="line" name="line" onchange="HREOnChangeLine();">
+                <option value="路線">路線</option>
+            </select>
+            <select id="station" name="station">
+                <option value="駅">駅</option>
+            </select>
+        </div>
 
-    <p>{{text}}</p>
 
-    <hr/>
+        <!-- 「都道府県名」 「路線名」 「駅名」 の連結コンボボックス -->
+        <div class="conbos2">
+
+            <select id="prefecture" name="prefecture" onchange="HREOnChangePrefecture();">
+                <option value="都道府県">都道府県を</option>
+            </select>
+            <select id="line" name="line" onchange="HREOnChangeLine();">
+                <option value="路線">路線</option>
+            </select>
+            <select id="station" name="station">
+                <option value="駅">駅</option>
+            </select>
+        </div>
+
+
+        <h1>絞り込み</h1>
+        <input type="text" ng-model="search_query">
+        <p>{{text}}</p>
+
+    </header>
+
+    <hr />
 
     <!-- PaginationControl UI -->
     <script type="text/ng-template" id="paginationControl.html">
@@ -76,6 +116,7 @@
 
         <div class="controls">
             <select id="rows-per-page" ng-model="rowsPerPage" class="input-xlarge">
+                <option>5</option>
                 <option>10</option>
                 <option>20</option>
                 <option>50</option>
